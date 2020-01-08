@@ -17,7 +17,7 @@ public class Ex2019Two extends ExceriseBase {
         List<String> lines = readFile(path);
 
         for (String line : lines) {
-            List<Integer> intOps = computer.intOpsFromInput(line);
+            List<Integer> intOps = Computer.intOpsFromInput(line);
 
             int processingIndex = 0;
 
@@ -34,7 +34,7 @@ public class Ex2019Two extends ExceriseBase {
     public void processB(String path) throws IOException {
         List<String> lines = readFile(path);
 
-        List<Integer> intOps = computer.intOpsFromInput(lines.get(0));
+        List<Integer> intOps = Computer.intOpsFromInput(lines.get(0));
 
         for (int firstValue = 0; firstValue <= 99; firstValue++) {
             for (int secondValue = 0; secondValue <= 99; secondValue++) {

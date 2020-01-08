@@ -5,6 +5,7 @@ import utils.ExceriseBase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Ex2019Five extends ExceriseBase {
@@ -17,18 +18,9 @@ public class Ex2019Five extends ExceriseBase {
         List<Integer> outputs = new ArrayList<>();
 
         for (String line : lines) {
-            List<Integer> intOps = computer.intOpsFromInput(line);
+            List<Integer> intOps = Computer.intOpsFromInput(line);
 
-            int processingIndex = 0;
-
-            while (processingIndex >= 0) {
-                Computer.Output result = computer.processIntOps(intOps, processingIndex, input);
-                processingIndex = result.getNextProcessingInput();
-                //System.out.println(intOps);
-                result.getOutput().ifPresent(System.out::println);
-                result.getOutput().ifPresent(outputs::add);
-            }
-
+            outputs.addAll(computer.processProgram(intOps, Collections.singletonList(input)));
             System.out.println(intOps);
         }
 

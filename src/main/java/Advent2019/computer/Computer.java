@@ -8,16 +8,31 @@ import java.util.stream.Collectors;
 
 public class Computer {
 
-    public List<Integer> intOpsFromInput(String input) {
+    public static List<Integer> intOpsFromInput(String input) {
         return Arrays.stream(input.split(",")).mapToInt(Integer::parseInt)
                 .boxed().collect(Collectors.toList());
     }
 
-    public Output processIntOps(List<Integer> intOps, int processingIndex) {
-        return processIntOps(intOps, processingIndex, null);
+    public List<Integer> processProgram(List<Integer> intOps, List<Integer> input) {
+        List<Integer> outputs = new ArrayList<>();
+        int processingIndex = 0;
+
+        while (processingIndex >= 0) {
+            Computer.Output result = processIntOps(intOps, processingIndex, input);
+            processingIndex = result.getNextProcessingInput();
+            //System.out.println(intOps);
+            result.getOutput().ifPresent(System.out::println);
+            result.getOutput().ifPresent(outputs::add);
+        }
+
+        return outputs;
     }
 
-    public Output processIntOps(List<Integer> intOps, int processingIndex, Integer input) {
+    public Output processIntOps(List<Integer> intOps, int processingIndex) {
+        return processIntOps(intOps, processingIndex, new ArrayList<>());
+    }
+
+    public Output processIntOps(List<Integer> intOps, int processingIndex, List<Integer> input) {
 
         Instruction instruction = new Instruction(intOps.get(processingIndex));
 
@@ -38,7 +53,7 @@ public class Computer {
         } else if (instruction.getOperationNumber() == Operation.INPUT.value) {
             int outputPosition = getValueGivenMode(intOps, processingIndex + 1, Parameter.IMMEDIATE);
 
-            intOps.set(outputPosition, input);
+            intOps.set(outputPosition, input.remove(0));
             return new Output(processingIndex + 2);
         } else if (instruction.getOperationNumber() == Operation.OUTPUT.value) {
             int outputValue = getValueGivenMode(intOps, processingIndex + 1, instruction.getParameters().get(0));
