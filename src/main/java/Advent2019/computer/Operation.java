@@ -1,5 +1,7 @@
 package Advent2019.computer;
 
+import java.util.Arrays;
+
 public enum Operation {
 
     ADD(1),
@@ -16,5 +18,9 @@ public enum Operation {
 
     Operation(int value) {
         this.value = value;
+    }
+
+    public static Operation getByValue(int value) {
+        return Arrays.stream(Operation.values()).filter(o -> o.value == value).findFirst().orElseThrow();
     }
 }

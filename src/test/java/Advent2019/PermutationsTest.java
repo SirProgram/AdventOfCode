@@ -12,7 +12,7 @@ public class PermutationsTest {
 
     @Test
     public void permutations() {
-        List<Integer> initialList = Arrays.asList(0, 1, 2, 3, 4);
+        List<Integer> initialList = Arrays.asList(0, 1, 2, 3);
         List<List<Integer>> permutations = Permutations.permutations(initialList);
         System.out.println(permutations);
         Assert.assertThat(permutations.size(), is(24));
