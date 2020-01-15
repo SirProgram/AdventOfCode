@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class Computer {
 
+    private int processingIndex = 0;
+
     public static List<Integer> intOpsFromInput(String input) {
         return Arrays.stream(input.split(",")).mapToInt(Integer::parseInt)
                 .boxed().collect(Collectors.toList());
@@ -30,7 +32,6 @@ public class Computer {
 
     public List<Integer> processProgramUntilOutput(List<Integer> intOps, List<Integer> input) {
         List<Integer> outputs = new ArrayList<>();
-        int processingIndex = 0;
 
         while (outputs.size() == 0) {
             Computer.Output result = processIntOps(intOps, processingIndex, input);
@@ -38,6 +39,10 @@ public class Computer {
             //System.out.println(intOps);
             result.getOutput().ifPresent(System.out::println);
             result.getOutput().ifPresent(outputs::add);
+
+            if (result.nextProcessingInput == -1) {
+                outputs.add(-1);
+            }
         }
 
         return outputs;
